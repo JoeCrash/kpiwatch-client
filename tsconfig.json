@@ -1,7 +1,10 @@
 {
   "compilerOptions": {
+    /* additional aliases for inteliisense */
+    "baseUrl": "./",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@mui/*": ["node_modules/@mui/*"]
     },
     "target": "ES2020",
     "useDefineForClassFields": true,
