@@ -3,8 +3,6 @@ import Row1 from "./Row1";
 import Row2 from "./Row2";
 import Row3 from './Row3';
 
-type Props = {};
-
 //breaking down vertical into 10 units
 const gridTemplateLargeScreens = `
     "a b c"
@@ -51,7 +49,7 @@ const gridTemplateSmallScreens = `
 "j"
 `;
 
-const Dashboard = (props: Props) => {
+const Dashboard = () => {
   const isAboveMediumScreens = useMediaQuery("(min-width: 1200px)");
   return (
     <Box
