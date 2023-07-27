@@ -6,7 +6,6 @@ import { Box, Typography, useTheme } from "@mui/material";
 import { DataGrid, GridCellParams } from "@mui/x-data-grid";
 import { Cell, Pie, PieChart } from "recharts";
 import { useMemo } from 'react';
-import { Palette } from '@mui/material/styles/createPalette';
 
 const Row3 = () => {
   const { palette } = useTheme();
