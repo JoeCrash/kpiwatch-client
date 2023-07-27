@@ -6,6 +6,7 @@ import { Box, Typography, useTheme } from "@mui/material";
 import { DataGrid, GridCellParams } from "@mui/x-data-grid";
 import { Cell, Pie, PieChart } from "recharts";
 import { useMemo } from 'react';
+import { Palette } from '@mui/material/styles/createPalette';
 
 const Row3 = () => {
   const { palette } = useTheme();
@@ -150,7 +151,28 @@ const Row3 = () => {
           </Box>
         </FlexBetween>
       </DashboardBox>
-      <DashboardBox bgcolor="#fff" gridArea="j"></DashboardBox>
+      <DashboardBox bgcolor="#fff" gridArea="j">
+        <BoxHeader
+            title="Overall Summary and Explanation Data"
+            sideText="+15%"
+        />
+        <Box
+          height="15px"
+          margin="1.25rem 1rem 0.4rem 1rem"
+          bgcolor={palette.primary[800]}
+          borderRadius="1rem"
+        >
+          <Box
+            height="15px"
+            bgcolor={palette.primary[600]}
+            borderRadius="1rem"
+            width="40%"
+          ></Box>
+        </Box>
+        <Typography margin="0 1rem" variant="h6">
+          Words to compel you to cheer or freak out depending on the numbers.
+        </Typography>
+      </DashboardBox>
     </>
   )
 }
