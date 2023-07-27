@@ -1,14 +1,32 @@
 import BoxHeader from "@/components/BoxHeader";
 import DashboardBox from "@/components/DashboardBox";
+import FlexBetween from "@/components/FlexBetween";
 import { useGetProductsQuery, useGetTransactionsQuery, useGetKpisQuery } from '@/state/api';
-import { Box, useTheme } from "@mui/material";
+import { Box, Typography, useTheme } from "@mui/material";
 import { DataGrid, GridCellParams } from "@mui/x-data-grid";
+import { Cell, Pie, PieChart } from "recharts";
+import { useMemo } from 'react';
 
 const Row3 = () => {
   const { palette } = useTheme();
+  const pieColors = [palette.primary[800], palette.primary[500]];
   const { data: kpiData } = useGetKpisQuery();
   const { data: productData } = useGetProductsQuery();
   const { data: transactionData } = useGetTransactionsQuery();
+
+    const pieChartData = useMemo(() => {
+      if (kpiData) {
+        const totalExpenses = kpiData[0].totalExpenses;
+        return Object.entries(kpiData[0].expensesByCategory).map(
+          ([key, value]) => {
+            return [
+              { name: key, value: value },
+              { name: `${key} of Total`, value: totalExpenses - value }
+            ]
+          }
+        )
+      }
+    }, [kpiData]);
 
   const productColumns = [
     { field: "_id", headerName: "id", flex: 1 },
@@ -21,6 +39,8 @@ const Row3 = () => {
     { field: "amount", headerName: "Amount", flex: 0.35, renderCell: (params: GridCellParams) => `$${params.value}` },
     { field: "productIds", headerName: "Count", flex: 0.67, renderCell: (params: GridCellParams) => (params.value as Array<string>).length },
   ];
+
+
   return (
     <>
       <DashboardBox bgcolor="#fff" gridArea="g">
@@ -91,7 +111,45 @@ const Row3 = () => {
           />
         </Box>
       </DashboardBox>
-      <DashboardBox bgcolor="#fff" gridArea="i"></DashboardBox>
+      <DashboardBox bgcolor="#fff" gridArea="i">
+        <BoxHeader
+            title="Expense Breakdown by Category"
+            sideText="+4%"
+        />
+        <FlexBetween mt="0.5rem" gap="0" p="0 1rem" textAlign="center">
+          {pieChartData?.map((data, i) => (
+            <Box key={`${data[0].name}-${i}`}>
+              <PieChart width={110} height={100}>
+                <Pie
+                  stroke="none"
+                  data={data}
+                  innerRadius={18}
+                  outerRadius={35}
+                  paddingAngle={2}
+                  dataKey="value"
+                >
+                  {data.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={pieColors[index]} />
+                  ))}
+                </Pie>
+              </PieChart>
+              <Typography variant="h5">{data[0].name}</Typography>
+            </Box>
+          ))}
+          
+          <Box ml="-0.7rem" flexBasis="40%" textAlign="center">
+            <Typography variant="h5">Target Sales</Typography>
+            <Typography m="0.3rem 0" variant="h3" color={palette.primary[300]}>83</Typography>
+            <Typography variant="h6">Finance Goals of the campaign</Typography>
+          </Box>
+          <Box flexBasis="40%">
+            <Typography variant="h5">Revenue Losses</Typography>
+            <Typography variant="h6">Losses are down 25%</Typography>
+            <Typography mt="0.4rem" variant="h5">Profit Margins</Typography>
+            <Typography variant="h6">Margins are up 30% from last month.</Typography>
+          </Box>
+        </FlexBetween>
+      </DashboardBox>
       <DashboardBox bgcolor="#fff" gridArea="j"></DashboardBox>
     </>
   )
