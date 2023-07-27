@@ -111,12 +111,9 @@ const Row3 = () => {
           />
         </Box>
       </DashboardBox>
-      <DashboardBox bgcolor="#fff" gridArea="i">
-        <BoxHeader
-            title="Expense Breakdown by Category"
-            sideText="+4%"
-        />
-        <FlexBetween mt="0.5rem" gap="0" p="0 1rem" textAlign="center">
+      <DashboardBox gridArea="i">
+        <BoxHeader title="Expense Breakdown By Category" sideText="+4%" />
+        <FlexBetween mt="0.5rem" gap="0.5rem" p="0 1rem" textAlign="center">
           {pieChartData?.map((data, i) => (
             <Box key={`${data[0].name}-${i}`}>
               <PieChart width={110} height={100}>
@@ -136,18 +133,6 @@ const Row3 = () => {
               <Typography variant="h5">{data[0].name}</Typography>
             </Box>
           ))}
-          
-          <Box ml="-0.7rem" flexBasis="40%" textAlign="center">
-            <Typography variant="h5">Target Sales</Typography>
-            <Typography m="0.3rem 0" variant="h3" color={palette.primary[300]}>83</Typography>
-            <Typography variant="h6">Finance Goals of the campaign</Typography>
-          </Box>
-          <Box flexBasis="40%">
-            <Typography variant="h5">Revenue Losses</Typography>
-            <Typography variant="h6">Losses are down 25%</Typography>
-            <Typography mt="0.4rem" variant="h5">Profit Margins</Typography>
-            <Typography variant="h6">Margins are up 30% from last month.</Typography>
-          </Box>
         </FlexBetween>
       </DashboardBox>
       <DashboardBox bgcolor="#fff" gridArea="j">
